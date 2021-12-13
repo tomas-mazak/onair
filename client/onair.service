@@ -1,0 +1,11 @@
+[Unit]
+Description=Automatic ON AIR sign illuminator
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/onair-watch
+Restart=on-failure
+User=tomas
+
+[Install]
+WantedBy=multi-user.target

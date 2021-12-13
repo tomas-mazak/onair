@@ -1,0 +1,20 @@
+#include "main.h"
+
+/* WiFi connection details */
+#define WIFI_SSID "<YOUR_WIFI_NETWORK>"
+#define WIFI_PASS "<YOUR_WIFI_NETWORK_PASSWORD>"
+
+/* Hostname in local network (e.g. specify 'onair' for the device to be available on 'onair.local') */
+#define MDNS_HOSTNAME "onair"
+
+/* How long a session should stay on without renewing (seconds) */
+#define SESSION_TIMEOUT 600
+
+/* GPIO pin where the light control MOSFET is connected */
+#define LED 4
+
+/* Authentication details (mutliple users with independent sessions are supported -
+   the light stays on while at least one session is active */
+const user_t USERS[] = {
+  {"admin", "admin"}
+};

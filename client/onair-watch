@@ -1,0 +1,31 @@
+#!/bin/bash
+
+username=admin
+password=admin
+
+ZOOM_WIN_NAME="Zoom Meeting"
+
+i=0
+
+export DISPLAY=:0
+
+echo "Watching for Zoom meeting being active"
+while true; do
+    if [ -n "$(wmctrl -l | grep "$ZOOM_WIN_NAME")" ]; then
+        # Zoom is ON
+        if [[ $i -le 1 ]]; then
+            echo "Turning onair ON (keepalive)"
+            curl -fs --digest -u $username:$password onair.local/on > /dev/null || echo "Failed to enable onair"
+            i=12
+        fi
+        i=$((i-1))
+    else
+        # Zoom is OFF
+        if [[ $i -gt 0 ]]; then
+            echo "Turning onair OFF"
+            curl -fs --digest -u $username:$password onair.local/off > /dev/null || echo "Failed to enable onair"
+            i=0
+        fi
+    fi
+    sleep 5
+done
