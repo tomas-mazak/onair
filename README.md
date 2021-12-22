@@ -37,6 +37,9 @@ almost certainly need to adapt it to your needs.
   * 2.2x6.5mm screws
   * Optional: [Small breadboard](https://www.gme.cz/nepajive-kontaktni-pole-zy-60)
 
+You will also need soldering equipment and a multimeter (and obviously a 3D
+printer).
+
 ## 3D print
 
 The sign consist of three 3D printed parts:
@@ -65,14 +68,94 @@ standoffs for your board instead, attach the board with screws and solder the
 wires directly to the pins on the board. If you do so, don't forget to update
 the position of USB access socket in the case front side model!
 
-## Electronics
+## Assembly & electronics
 
-TODO
+![Open case with electronics in place](pictures/open_case.jpg)
+
+Steps to build the project:
+
+1. Stick the self-adhesive LED stripe to the inner perimeter of the front case,
+   near the front. It should form a "loop" around the letters. Begin from the
+   bottom middle. Cut the excessive LED stripe with pliers.
+2. Insert the reflection screen, make sure the LED strip wires lead to the back,
+   there is a cut-out in the screen for the wires.
+3. Affix the power jack socket to the opening in the bottom of the front case.
+   Solder a pair of wires to the power jack. They should be long enough to have
+   the top and bottom case sides next to each other while being connected by
+   the wires. Extend the LED strip wires if needed so they are the same length.
+4. (Skip this step if you don't use breadboard) Plug the controller board to the
+   bread board, near one end, MicroUSB port facing outwards. Affix the
+   self-adhesive breadboard to the middle-left of the back side of the case,
+   with controller MicroUSB port pointing left (before sticking it down, attach
+   front side to check if the MicroUSB port is aligned with the opening). See
+   the above picture for details.
+5. Attach the MOSFET board to the standoffs in the middle of the back side with
+   screws. Attach the LED strip wires to the screw terminal marked "OUT". (Pay
+   attention to polarity!).
+6. Solder a pair of short wires to the step-down converter (IN side). Solder
+   another pair of wires to the OUT side - since I use breadboard to connect the
+   controller, I used wires with breadboard (dupont) pins at the other hand, if
+   you plan to solder the wires to the controller, use standard wires. **Do not
+   connect controller yet (we have to set the right voltage first)!**
+7. Attach the wires from power socket, _together_ with the step-down board IN
+   wires, to the IN screw terminal on the MOSFET board.
+8. Attach multimeter to the loose ends of the step-down board OUT wires to
+   measure voltage. Plug in the 12V power supply. Using a precision screwdriver,
+   adjust the potentiometer on the step-down board so the output voltage of the
+   step-down is just above 5V. Disconnect the power supply and insulate the step
+   down board (e.g. using an electrical tape).
+9. Attach the step-down board OUT wires to the controller 5V and GND pins.
+   Attach the GND pin on the MOSFET board to controller's GND and SIG pin on the
+   MOSFET board to controller's GPIO pin (I have used GPIO 4). Use dupont cables
+   if you use breadboard, otherwise solder it.
+9. Close the case and screw it together.
 
 ## Controller software
 
-TODO
+Use [PlatformIO](https://platformio.org/) to open this repo. Save the [config.h
+template](src/config.h.template) as `src/config.h` and configure WiFi settings,
+the device's hostname and API users. Connect the sign to your laptop using a
+MicroUSB cable. Plug in the power source to the device. Build the project and
+program the board with it. In case of issues, check [PlatformIO
+documentation](https://docs.platformio.org/en/latest/).
+
+If all is OK, you should be able to access your sign within your WiFi network
+using hostname `onair.local` (if you haven't changed it in the config) using
+your browser. Use http://onair.local/on link to turn the sign on and
+http://onair.local/off to turn it off. Credentials from the config will be
+required.
+
+**Note:** If the hostname doesn't work, it might be that mDNS resolution doesn't
+work on your device (for example, it doesn't work on Android phones), try with
+the IP address: keep USB cable attached, open serial console (115200 baud rate)
+and restart the device - The obtained IP address will be printed on the console.
+
+To turn the sign on/off from command-line using curl (with default values in
+config):
+
+```shell
+curl --digest -u admin:admin -v onair.local/on
+curl --digest -u admin:admin -v onair.local/off
+```
 
 ## Client script
 
-TODO
+The main idea of this project was to have the sign automatically illuminate
+when I am on a call. For that, I've created a [simple script](client/onair-watch)
+that checks if a window manager window with a title "Zoom Meeting" or "Zoom
+Webinar" - if so, turn the sign on and keep sending a keepalive "ON" commands.
+Otherwise, turn it off. There is a [systemd unit](client/onair.service) to make
+this running as a service. Known issue: when I am sharing a screen, the meeting
+window disappears and so the sign is turned off - I still need to look into that.
+
+Another "trigger condition" for the sign you can consider is whether your webcam
+is in use. On Linux, that can be checked by running following command:
+
+```
+lsmod | grep '^uvcvideo\b'
+```
+
+The second number next to `uvcvideo` module name is "Used by", number of
+programs currently using the module. If it is 0, the module (and hence the
+webcam) is not in use, otherwise it is. Obvious disadvantage of this approach is
+that if you have a call with video disabled, it will not trigger the condition.
