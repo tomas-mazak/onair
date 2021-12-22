@@ -74,9 +74,9 @@ the position of USB access socket in the case front side model!
 
 Steps to build the project:
 
-1. Stick the self-adhesive LED stripe to the inner perimeter of the front case,
+1. Stick the self-adhesive LED strip to the inner perimeter of the front case,
    near the front. It should form a "loop" around the letters. Begin from the
-   bottom middle. Cut the excessive LED stripe with pliers.
+   bottom middle. Cut the excessive LED strip with pliers.
 2. Insert the reflection screen, make sure the LED strip wires lead to the back,
    there is a cut-out in the screen for the wires.
 3. Affix the power jack socket to the opening in the bottom of the front case.
@@ -85,11 +85,11 @@ Steps to build the project:
    the wires. Extend the LED strip wires if needed so they are the same length.
 4. (Skip this step if you don't use breadboard) Plug the controller board to the
    bread board, near one end, MicroUSB port facing outwards. Affix the
-   self-adhesive breadboard to the middle-left of the back side of the case,
-   with controller MicroUSB port pointing left (before sticking it down, attach
-   front side to check if the MicroUSB port is aligned with the opening). See
-   the above picture for details.
-5. Attach the MOSFET board to the standoffs in the middle of the back side with
+   self-adhesive breadboard to the middle-left of the back case, with controller
+   MicroUSB port pointing left (before sticking it down, attach front case to
+   check if the MicroUSB port is aligned with the opening). See the above
+   picture for details.
+5. Attach the MOSFET board to the standoffs in the middle of the back case with
    screws. Attach the LED strip wires to the screw terminal marked "OUT". (Pay
    attention to polarity!).
 6. Solder a pair of short wires to the step-down converter (IN side). Solder
