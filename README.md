@@ -7,7 +7,7 @@ illuminated "ON AIR" sign that connects to WiFi and can be turned on/off over
 the network.
 
 The basic idea was to be able to let people around me know that I am on a video
-call so they don't disturb me. I wanted something that is easily noticed, so
+call so they don't disturb me. I wanted something that is easily noticed, so an
 illuminated sign is great for that and I thought the famous radio "ON AIR"
 message would be a good fun (ha ha). I also wanted to be able to control it
 programatically, so I can automate it to illuminate when I have a zoom call
@@ -15,9 +15,9 @@ active on my laptop.
 
 Hence I have created this 3D printed sign, with an ESP8266 controller, as that's
 the cheapest chip I know that has WiFi. The controller runs a simple program
-with mDNS responder, so I can access it using a hostname rather than IP that can
-change, and a simple HTTP API, so I can send the ON and OFF commands to it over
-the network.
+with mDNS responder, so I can access it using a hostname rather than an IP that
+can change, and a simple HTTP API, so I can send the ON and OFF commands to it
+over the network.
 
 For reference and for anyone who might want to build a similar sign, here's a
 simple tutorial.
@@ -39,7 +39,7 @@ almost certainly need to adapt it to your needs.
 
 ## 3D print
 
-The side consist of three 3D printed parts:
+The sign consist of three 3D printed parts:
 
 - [case front side](3d/stl/onair-front.stl)
 - [case back side](3d/stl/onair-back.stl)
@@ -50,18 +50,18 @@ Pi (that I didn't use in the end). It has an attachment for a [wall mount like
 this](https://www.obi.cz/nastenne-haky/lux-nastenny-hacek-plastovy-40-mm-bily-2-ks/p/4949582).
 
 I recommend printing the case using black PETG filament and the screen using
-white PETG filament. If you use Prusa i3MK3S(+) printer with PETG prusament,
-you might use [my gcode](3d/gcode) directly.
+white PETG filament. If you use Prusa i3MK3S(+) printer with PETG Prusament,
+you might be able to use [my gcode](3d/gcode) directly.
 
-If you need to like to modify the design, see the [OpenSCAD
-source](3d/openscad/onair.scad). In such case, you will also need to install a
-stencil font, I have used [Stencilia Regular](https://www.dafont.com/stencilia.font).
+If you like to modify the design, see the [OpenSCAD source](3d/openscad/onair.scad).
+In such case, you will also need to install a stencil font, I have used
+[Stencilia Regular](https://www.dafont.com/stencilia.font).
 
 **Note:** I have used a spare NodeMCU (ESP8266) board with breadboard pins
-already soldered, that I didn't feel like desoldering, and so I have affixed a
-small breadboard to the back side of the sign case and plugged the board in. If
-you have a controller board without breadboard pins, it would be better to add
-standoffs for your board instead, attach the board with screw and and solder the
+already soldered that I didn't feel like desoldering. So I have affixed a small
+breadboard to the back side of the sign case and plugged the board in. If you
+have a controller board without breadboard pins, it would be better to add
+standoffs for your board instead, attach the board with screws and solder the
 wires directly to the pins on the board. If you do so, don't forget to update
 the position of USB access socket in the case front side model!
 
